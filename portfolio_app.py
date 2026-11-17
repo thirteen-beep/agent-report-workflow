@@ -2,7 +2,6 @@
 import os
 from pathlib import Path
 import tempfile
-import uuid
 import streamlit as st
 from langgraph.types import Command
 from report_agent.workflow import load_csv, model_plan, open_workflow
@@ -39,7 +38,7 @@ try:
         snapshot = graph.get_state(config)
         if snapshot.values:
             st.write('运行模式：'+snapshot.values.get('mode', 'unknown'))
-            st.json(snapshot.values.get('results', {}))
+            st.json(snapshot.values.get('results', {}), expanded=False)
             if snapshot.next == ('review',):
                 st.info('计算完成，等待人工审核。审核前不会生成报告。')
                 yes, no = st.columns(2)
